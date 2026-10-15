@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Clique Foco | Marketing Audiovisual & Diagnóstico</title>
+  
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            brand: {
+              terracotta: '#C04E2A',
+              gold: '#E1B12C',
+              forest: '#2E5E3E',
+              cream: '#F5E9D7',
+              brown: '#683D2E',
+            }
+          },
+          animation: {
+            'bounce-subtle': 'bounceSubtle 2s infinite',
+          },
+          keyframes: {
+            bounceSubtle: {
+              '0%, 100%': { transform: 'translateY(0)' },
+              '50%': { transform: 'translateY(-4px)' }
+            }
+          }
+        }
+      }
+    }
+  </script>
+
+  <!-- React 18 & Babel CDN -->
+  <script src="https://unpkg.com/react@18.3.1/umd/react.production.min.js" crossorigin></script>
+  <script src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.production.min.js" crossorigin></script>
+
+  <!-- Tipografia Poppins & Estilos Clean -->
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap');
+    body {
+      font-family: 'Poppins', sans-serif;
+      background-color: #F5E9D7;
+      color: #683D2E;
+    }
+    .clean-card {
+      background: #FFFFFF;
+      border: 1px solid rgba(104, 61, 46, 0.1);
+      box-shadow: 0 4px 20px -2px rgba(104, 61, 46, 0.05);
+    }
+    .clean-card-hover {
+      transition: all 0.2s ease-in-out;
+    }
+    .clean-card-hover:hover {
+      border-color: rgba(192, 78, 42, 0.4);
+      box-shadow: 0 10px 25px -5px rgba(192, 78, 42, 0.12);
+    }
+    ::-webkit-scrollbar {
+      width: 6px;
+      height: 6px;
+    }
+    ::-webkit-scrollbar-track {
+      background: #F5E9D7;
+    }
+    ::-webkit-scrollbar-thumb {
+      background: #C04E2A;
+      border-radius: 4px;
+    }
+  </style>
+</head>
+<body class="min-h-screen selection:bg-brand-terracotta selection:text-white antialiased">
+  <div id="root"></div>
+
+  <script src="./app.js"></script>
+</body>
+</html>

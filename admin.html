@@ -1,0 +1,51 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="robots" content="noindex,nofollow">
+  <title>Acesso administrativo | Clique Foco</title>
+  <style>
+    :root { color-scheme: light; --cream:#F5E9D7; --brown:#683D2E; --terra:#C04E2A; --green:#2E5E3E; }
+    * { box-sizing:border-box; }
+    body { margin:0; min-height:100vh; display:grid; place-items:center; padding:24px; background:var(--cream); color:var(--brown); font-family:Arial,sans-serif; }
+    main { width:min(100%,400px); background:#fff; padding:32px; border-radius:20px; box-shadow:0 12px 40px #683d2e1c; }
+    .mark { width:42px; height:42px; display:grid; place-items:center; border-radius:12px; color:#fff; background:var(--terra); font-weight:800; font-size:20px; }
+    h1 { margin:20px 0 6px; font-size:23px; }
+    p { margin:0 0 24px; color:#76594d; line-height:1.5; font-size:14px; }
+    label { display:block; margin-bottom:8px; font-weight:700; font-size:13px; }
+    input { width:100%; padding:13px 14px; border:1px solid #d8c9be; border-radius:10px; font-size:16px; }
+    input:focus { outline:3px solid #c04e2a33; border-color:var(--terra); }
+    button { width:100%; margin-top:16px; padding:13px; border:0; border-radius:10px; background:var(--green); color:#fff; font-weight:700; font-size:15px; cursor:pointer; }
+    #error { min-height:20px; margin:12px 0 0; color:#b42318; font-size:13px; }
+    .back { display:block; text-align:center; margin-top:16px; color:#76594d; font-size:13px; }
+  </style>
+</head>
+<body>
+  <main>
+    <div class="mark">C</div>
+    <h1>Área administrativa</h1>
+    <p>Informe seu e-mail e sua senha cadastrados no Firebase.</p>
+    <form id="login-form">
+      <label for="email">E-mail</label><input id="email" type="email" autocomplete="username" required style="margin-bottom:16px"><label for="password">Senha</label>
+      <input id="password" type="password" autocomplete="current-password" required autofocus>
+      <button type="submit">Entrar no painel</button>
+      <div id="error" role="alert" aria-live="polite"></div>
+    </form>
+    <a class="back" href="./index.html">Voltar à página do cliente</a>
+  </main>
+  <script>window.addEventListener('error',function(e){if(e.target && e.target.tagName==='SCRIPT')document.getElementById('error').textContent='Não foi possível carregar o Firebase. Confira a conexão e abra pelo link publicado.';},true);</script><script type="module">
+    import {login,message} from './firebase-service.js';
+    document.getElementById('login-form').addEventListener('submit',async event => {
+      event.preventDefault();
+      const button=event.currentTarget.querySelector('button');button.disabled=true;
+      const error=document.getElementById('error');error.textContent='Entrando…';
+      try {
+        await login(document.getElementById('email').value.trim(),document.getElementById('password').value);
+        location.href='./index.html#admin';
+      } catch(e) {error.textContent=message(e);}
+      finally {button.disabled=false;}
+    });
+  </script>
+</body>
+</html>
