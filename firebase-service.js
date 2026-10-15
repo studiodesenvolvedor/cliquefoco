@@ -51,6 +51,18 @@ export async function login(email, password) {
 }
 export async function logout() { await signOut(auth); }
 
+// Applies this requested brand update once, including for a previously saved CMS document.
+// The marker is saved alongside the next CMS publication; later admin edits remain respected.
+export function applyBrandUpdate(settings) {
+  if (settings.brandUpdateVersion === 'ceo-contact-20261015') return settings;
+  return {
+    ...settings,
+    ceoPhoto: new URL('./ceo.jpeg', import.meta.url).href,
+    whatsappNumber: '5586998264603',
+    brandUpdateVersion: 'ceo-contact-20261015'
+  };
+}
+
 export function subscribe({defaults, onSettings, onLeads, onSlots, onMetrics, onIdentity, onError, onReady}) {
   let unsub = [], closed = false, stopAuth = () => {};
   const report = e => { if (!closed) onError(message(e)); };
@@ -72,7 +84,11 @@ export function subscribe({defaults, onSettings, onLeads, onSlots, onMetrics, on
       unsub.push(onSnapshot(SETTINGS, {includeMetadataChanges:true}, snap => {
         if (snap.metadata.fromCache) return;
         const value = snap.exists() ? snap.data() : {data:defaults,revision:0};
-        onSettings({...defaults,...value.data}, value.revision || 0);
+        const effective = applyBrandUpdate({...defaults,...value.data});
+        onSettings(effective, value.revision || 0);
+        if (isAdmin && value.data?.brandUpdateVersion !== effective.brandUpdateVersion) {
+          saveSettings(effective, value.revision || 0).catch(report);
+        }
         done('settings');
       }, report));
       const leadsQuery = isAdmin ? collection(db,'leads') : query(collection(db,'leads'),where('ownerUid','==',account.uid));

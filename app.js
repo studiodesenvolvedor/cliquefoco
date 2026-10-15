@@ -189,10 +189,10 @@ const DEFAULT_SETTINGS = {
   videoFileData: null,
   videoThumbnail: "https://images.unsplash.com/photo-1460925895917-afdab827c52f?auto=format&fit=crop&w=1200&q=80",
   confirmationMessage: "Sua reunião foi agendada com sucesso. O primeiro passo foi dado. Agora vamos construir juntos o próximo passo.",
-  whatsappNumber: "5586999998888",
+  whatsappNumber: "5586998264603",
   ceoName: "Anderson Medeiros",
   ceoRole: "Fundador & Diretor de Estratégia",
-  ceoPhoto: "https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=300&q=80",
+  ceoPhoto: "https://studiodesenvolvedor.github.io/cliquefoco/ceo.jpeg",
   ceoMessage: "Marketing não começa na divulgação, começa no entendimento. Antes de aplicar a estratégia de marketing, entendemos o momento da sua empresa. Identificamos suas lacunas e estruturamos o que precisa ser ajustado para que o marketing tenha uma base sólida."
 };
 const DEFAULT_QUESTIONS = [{
