@@ -245,7 +245,7 @@ function App() {
   const [metrics, setMetrics] = useState({});
   const [ready, setReady] = useState(false);
   const [busy, setBusy] = useState(false);
-  const [notice, setNotice] = useState('Conectando ao servidor…');
+  const [notice, setNotice] = useState('Conectando ao servidor');
   const [dirty, setDirty] = useState(false);
   const dirtyRef = useRef(false),
     busyRef = useRef(false),
@@ -292,7 +292,7 @@ function App() {
       });
     }).catch(() => {
       clearTimeout(timeout);
-      setNotice('Não foi possível carregar o Firebase. Confira a internet e abra a página pelo link do GitHub Pages.');
+      setNotice('Não foi possível conectar ao servidor. Verifique sua conexão e tente novamente.');
     });
     const leave = event => {
       if (dirtyRef.current) {
@@ -419,9 +419,7 @@ function App() {
     role: "status",
     "aria-live": "polite",
     className: "px-4 py-2 text-center text-xs"
-  }, busy ? 'Salvando…' : notice), !ready && /*#__PURE__*/React.createElement("p", {
-    className: "text-center p-8"
-  }, "Aguardando conexão. Abra esta página pelo endereço do GitHub Pages."), /*#__PURE__*/React.createElement("main", {
+  }, busy ? 'Salvando…' : notice), /*#__PURE__*/React.createElement("main", {
     className: "flex-1 pb-12"
   }, /*#__PURE__*/React.createElement("fieldset", {
     disabled: busy,
