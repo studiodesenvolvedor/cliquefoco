@@ -828,12 +828,7 @@ function ConfirmationPage({
     className: "text-xs text-[#683D2E]/90 font-medium leading-relaxed max-w-md mx-auto"
   }, settings.confirmationMessage)), appointment && /*#__PURE__*/React.createElement("div", {
     className: "bg-[#F5E9D7]/40 p-4 rounded-xl border border-[#683D2E]/15 text-xs space-y-1 text-[#683D2E]"
-  }, /*#__PURE__*/React.createElement("p", null, /*#__PURE__*/React.createElement("strong", null, "Data:"), " ", appointment.date.split('-').reverse().join('/')), /*#__PURE__*/React.createElement("p", null, /*#__PURE__*/React.createElement("strong", null, "Horário:"), " ", appointment.time, " (Duração: 2 horas)"), /*#__PURE__*/React.createElement("p", null, /*#__PURE__*/React.createElement("strong", null, "Modalidade:"), " Reunião ", appointment.type === 'online' ? 'Online' : 'Presencial')), /*#__PURE__*/React.createElement("a", {
-    href: `https://wa.me/${settings.whatsappNumber}`,
-    target: "_blank",
-    rel: "noreferrer",
-    className: "w-full py-4 bg-[#2E5E3E] hover:bg-[#2E5E3E]/90 text-white font-bold rounded-xl flex items-center justify-center space-x-2 shadow-md transition"
-  }, /*#__PURE__*/React.createElement(Icons.Whatsapp, null), /*#__PURE__*/React.createElement("span", null, "Falar pelo WhatsApp")), /*#__PURE__*/React.createElement("button", {
+  }, /*#__PURE__*/React.createElement("p", null, /*#__PURE__*/React.createElement("strong", null, "Data:"), " ", appointment.date.split('-').reverse().join('/')), /*#__PURE__*/React.createElement("p", null, /*#__PURE__*/React.createElement("strong", null, "Horário:"), " ", appointment.time, " (Duração: 2 horas)"), /*#__PURE__*/React.createElement("p", null, /*#__PURE__*/React.createElement("strong", null, "Modalidade:"), " Reunião ", appointment.type === 'online' ? 'Online' : 'Presencial')), /*#__PURE__*/React.createElement("button", {
     onClick: onRestart,
     className: "text-xs text-[#683D2E]/60 underline block mx-auto font-medium"
   }, "Voltar ao Início")));
