@@ -270,6 +270,8 @@ function App() {
           if (!admin) {
             setCurrentLead(data[0] || null);
             setSelectedAppointment(data[0]?.appointment || null);
+          } else {
+            setCurrentLead(previous => previous ? data.find(lead => lead.id === previous.id) || previous : null);
           }
         },
         onSlots: setBookedSlots,
@@ -309,6 +311,9 @@ function App() {
       window.removeEventListener('offline', offline);
     };
   }, []);
+  useEffect(() => {
+    if (currentLead?.appointment) setSelectedAppointment(currentLead.appointment);
+  }, [currentLead]);
   const action = async fn => {
     if (busyRef.current) return false;
     busyRef.current = true;

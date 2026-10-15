@@ -151,7 +151,9 @@ export function normalizeVideoUrl(value) {
 
 export async function saveLead(incoming) {
   const account = user(), isAdmin = account.uid === ADMIN_UID;
-  const ref = doc(db,'leads',isAdmin ? incoming.id : account.uid);
+  // The public questionnaire does not supply an ID, even when an admin tests it.
+  const leadId = isAdmin ? (incoming.id || doc(collection(db,'leads')).id) : account.uid;
+  const ref = doc(db,'leads',leadId);
   const snap = await getDocFromServer(ref);
   const previous = snap.exists() ? snap.data() : null;
   if (previous && !isAdmin) return ref.id; // one application per anonymous identity; safe retry
