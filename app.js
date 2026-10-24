@@ -495,10 +495,6 @@ function LandingPage({
   return /*#__PURE__*/React.createElement("div", {
     className: "max-w-xl mx-auto px-4 pt-6 space-y-6"
   }, /*#__PURE__*/React.createElement("div", {
-    className: "text-center space-y-2"
-  }, /*#__PURE__*/React.createElement("span", {
-    className: "inline-flex items-center px-3 py-1 rounded-full text-[11px] font-bold uppercase tracking-wider bg-[#E1B12C]/20 text-[#683D2E] border border-[#E1B12C]/40"
-  }, settings.tagline)), /*#__PURE__*/React.createElement("div", {
     className: "text-center px-2"
   }, /*#__PURE__*/React.createElement("h2", {
     className: "text-lg sm:text-xl font-bold text-[#683D2E] leading-relaxed"
@@ -551,11 +547,7 @@ function LandingPage({
     className: "w-full py-4 px-6 rounded-xl bg-[#C04E2A] hover:bg-[#C04E2A]/90 text-white font-extrabold text-base flex items-center justify-center space-x-2 shadow-lg shadow-[#C04E2A]/20 transition cursor-pointer"
   }, /*#__PURE__*/React.createElement("span", null, settings.buttonText), /*#__PURE__*/React.createElement(Icons.ArrowRight, null)), /*#__PURE__*/React.createElement("p", {
     className: "text-center text-xs text-[#683D2E]/60 flex items-center justify-center font-medium"
-  }, /*#__PURE__*/React.createElement(Icons.Shield, null), settings.microcopy)), /*#__PURE__*/React.createElement("div", {
-    className: "clean-card rounded-2xl p-5 text-center"
-  }, /*#__PURE__*/React.createElement("p", {
-    className: "text-[#683D2E]/90 text-sm leading-relaxed font-medium"
-  }, settings.description)), settings.ceoName && /*#__PURE__*/React.createElement("div", {
+  }, /*#__PURE__*/React.createElement(Icons.Shield, null), settings.microcopy)), settings.ceoName && /*#__PURE__*/React.createElement("div", {
     className: "clean-card p-5 rounded-2xl flex flex-col sm:flex-row items-center sm:items-start space-y-4 sm:space-y-0 sm:space-x-4 text-center sm:text-left"
   }, /*#__PURE__*/React.createElement("img", {
     src: settings.ceoPhoto,
