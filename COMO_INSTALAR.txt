@@ -1,0 +1,23 @@
+VÍDEO NA PÁGINA DO CLIENTE — CLIQUE FOCO
+
+1. Extraia este ZIP.
+2. No GitHub, abra o repositório cliquefoco e clique em Add file > Upload files.
+3. Envie os cinco arquivos da pasta extraída juntos, na raiz do site:
+   app.js, firebase-service.js, apresentacao.mp4, capa-video.jpg e COMO_INSTALAR.txt.
+   Os dois arquivos JavaScript substituem as versões anteriores.
+4. Confirme em Commit changes e aguarde a publicação do GitHub Pages.
+5. Abra a página do cliente e atualize com Ctrl+F5.
+
+O vídeo aparece abaixo do título e acima do botão do questionário.
+Clique na capa para assistir com som, pausar, avançar ou abrir em tela cheia.
+A versão foi reduzida de 4K para Full HD e convertida para H.264/AAC.
+O arquivo original permanece preservado.
+
+O vídeo também aparece quando já existem configurações antigas no Firebase.
+Ao abrir o admin, essa configuração é gravada automaticamente uma única vez.
+Depois disso, o campo Vídeo Principal no CMS permite trocar o link ou apagar
+para ocultar o bloco, como antes.
+
+Mantenha index.html, admin.html, firebase-config.js, ceo.jpeg e os demais
+arquivos atuais. Não é necessário alterar as regras do Firebase.
+Este pacote não publica os arquivos automaticamente.

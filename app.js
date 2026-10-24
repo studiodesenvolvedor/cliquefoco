@@ -7,6 +7,10 @@ const firebaseReady = import('./firebase-service.js');
 function track(event) {
   firebaseReady.then(F => F.track(event)).catch(() => {});
 }
+function isDirectVideo(value) {
+  try { return /\.mp4$/i.test(new URL(value, location.href).pathname); }
+  catch { return false; }
+}
 function embedUrl(value) {
   try {
     const url = new URL(value);
@@ -185,9 +189,9 @@ const DEFAULT_SETTINGS = {
   buttonText: "INICIAR APLICAÇÃO",
   microcopy: "Processo direto, rápido e 100% confidencial",
   videoType: "embed",
-  videoUrl: "",
+  videoUrl: new URL("./apresentacao.mp4", location.href).href,
   videoFileData: null,
-  videoThumbnail: "https://images.unsplash.com/photo-1460925895917-afdab827c52f?auto=format&fit=crop&w=1200&q=80",
+  videoThumbnail: new URL("./capa-video.jpg", location.href).href,
   confirmationMessage: "Sua reunião foi agendada com sucesso. O primeiro passo foi dado. Agora vamos construir juntos o próximo passo.",
   whatsappNumber: "5586998264603",
   ceoName: "Anderson Medeiros",
@@ -482,7 +486,8 @@ function LandingPage({
   onStart
 }) {
   const [isVideoPlaying, setIsVideoPlaying] = useState(false);
-  useEffect(() => setIsVideoPlaying(false), [settings.videoUrl, settings.videoFileData]);
+  const [videoError, setVideoError] = useState(false);
+  useEffect(() => { setIsVideoPlaying(false); setVideoError(false); }, [settings.videoUrl, settings.videoFileData]);
   return /*#__PURE__*/React.createElement("div", {
     className: "max-w-xl mx-auto px-4 pt-6 space-y-6"
   }, /*#__PURE__*/React.createElement("div", {
@@ -511,7 +516,20 @@ function LandingPage({
     className: "absolute inset-0 bg-black/30 flex items-center justify-center"
   }, /*#__PURE__*/React.createElement("span", {
     className: "rounded-full p-4 bg-[#C04E2A] text-white"
-  }, /*#__PURE__*/React.createElement(Icons.Play, null)))) : /*#__PURE__*/React.createElement("iframe", {
+  }, /*#__PURE__*/React.createElement(Icons.Play, null))))  : videoError ? React.createElement("p", {
+    role: "alert", className: "p-6 text-center text-sm"
+  }, "Não foi possível reproduzir o vídeo. Atualize a página e tente novamente.") : isDirectVideo(settings.videoUrl) ? React.createElement("video", {
+    key: settings.videoUrl,
+    src: settings.videoUrl,
+    controls: true,
+    playsInline: true,
+    autoPlay: true,
+    preload: "metadata",
+    poster: settings.videoThumbnail,
+    "aria-label": "Apresentação Clique Foco",
+    className: "w-full h-full bg-black object-contain",
+    onError: () => setVideoError(true)
+  }, "Seu navegador não suporta a reprodução deste vídeo.") : /*#__PURE__*/React.createElement("iframe", {
     key: settings.videoUrl,
     src: embedUrl(settings.videoUrl) + '?autoplay=1',
     title: "Vídeo Explicativo",
@@ -1138,9 +1156,9 @@ function AdminDashboard({
     className: "grid grid-cols-1 md:grid-cols-2 gap-4"
   }, /*#__PURE__*/React.createElement("div", null, /*#__PURE__*/React.createElement("p", {
     className: "text-xs"
-  }, "Cole um link do YouTube ou Vimeo e clique em Salvar e publicar. Deixe o campo vazio para ocultar o vídeo.")), /*#__PURE__*/React.createElement("div", null, /*#__PURE__*/React.createElement("label", {
+  }, "O vídeo enviado já está configurado. Para trocar, cole um link HTTPS de MP4, YouTube ou Vimeo e clique em Salvar e publicar. Deixe o campo vazio para ocultar o vídeo.")), /*#__PURE__*/React.createElement("div", null, /*#__PURE__*/React.createElement("label", {
     className: "block text-xs text-[#683D2E]/70 mb-1"
-  }, "URL (YouTube / Vimeo):"), /*#__PURE__*/React.createElement("input", {
+  }, "URL (MP4 / YouTube / Vimeo):"), /*#__PURE__*/React.createElement("input", {
     type: "text",
     value: settings.videoUrl,
     onChange: e => setSettings({

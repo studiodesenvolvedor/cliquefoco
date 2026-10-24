@@ -54,6 +54,13 @@ export async function logout() { await signOut(auth); }
 // Applies this requested brand update once, including for a previously saved CMS document.
 // The marker is saved alongside the next CMS publication; later admin edits remain respected.
 export function applyBrandUpdate(settings) {
+  if (settings.videoUpdateVersion !== 'mp4-20261024') {
+    settings = {...settings,
+      videoUrl: new URL('./apresentacao.mp4', import.meta.url).href,
+      videoThumbnail: new URL('./capa-video.jpg', import.meta.url).href,
+      videoFileData: null,
+      videoUpdateVersion: 'mp4-20261024'};
+  }
   if (settings.brandUpdateVersion === 'ceo-contact-20261015') return settings;
   return {
     ...settings,
@@ -86,7 +93,7 @@ export function subscribe({defaults, onSettings, onLeads, onSlots, onMetrics, on
         const value = snap.exists() ? snap.data() : {data:defaults,revision:0};
         const effective = applyBrandUpdate({...defaults,...value.data});
         onSettings(effective, value.revision || 0);
-        if (isAdmin && value.data?.brandUpdateVersion !== effective.brandUpdateVersion) {
+        if (isAdmin && (value.data?.brandUpdateVersion !== effective.brandUpdateVersion || value.data?.videoUpdateVersion !== effective.videoUpdateVersion)) {
           saveSettings(effective, value.revision || 0).catch(report);
         }
         done('settings');
@@ -132,8 +139,9 @@ export async function saveSettings(settings, revision) {
 export function normalizeVideoUrl(value) {
   if (!value) return '';
   let url;
-  try { url = new URL(value); } catch { throw new Error('Cole um link completo do YouTube ou Vimeo.'); }
+  try { url = new URL(value); } catch { throw new Error('Cole um link completo de MP4, YouTube ou Vimeo.'); }
   if (url.protocol !== 'https:') throw new Error('Use um link HTTPS do vídeo.');
+  if (/\.mp4$/i.test(url.pathname) && !url.username && !url.password) return url.href;
   if (['youtu.be','www.youtu.be'].includes(url.hostname)) {
     const id = url.pathname.split('/')[1];
     if (/^[\w-]{11}$/.test(id || '')) return `https://www.youtube.com/embed/${id}`;
@@ -146,7 +154,7 @@ export function normalizeVideoUrl(value) {
     const id = url.pathname.split('/').filter(Boolean).pop();
     if (/^\d+$/.test(id || '')) return `https://player.vimeo.com/video/${id}`;
   }
-  throw new Error('Esse endereço não é um link válido do YouTube ou Vimeo.');
+  throw new Error('Esse endereço não é um link válido de MP4, YouTube ou Vimeo.');
 }
 
 export async function saveLead(incoming) {
