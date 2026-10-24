@@ -249,7 +249,7 @@ function App() {
   const [metrics, setMetrics] = useState({});
   const [ready, setReady] = useState(false);
   const [busy, setBusy] = useState(false);
-  const [notice, setNotice] = useState('Conectando ao servidor');
+  const [notice, setNotice] = useState('');
   const [dirty, setDirty] = useState(false);
   const dirtyRef = useRef(false),
     busyRef = useRef(false),
@@ -258,7 +258,7 @@ function App() {
   useEffect(() => {
     let stop = () => {},
       disposed = false;
-    const timeout = setTimeout(() => setNotice('A conexão está demorando. Confira a internet e se publicou as regras do Firestore.'), 15000);
+    const timeout = setTimeout(() => setNotice('A conexão está demorando. Você pode assistir ao vídeo e preencher o formulário enquanto aguarda.'), 15000);
     firebaseReady.then(F => {
       if (disposed) return;
       stop = F.subscribe({
@@ -291,7 +291,7 @@ function App() {
         onReady: () => {
           clearTimeout(timeout);
           setReady(true);
-          setNotice('Conectado • atualizações automáticas');
+          setNotice('');
         }
       });
     }).catch(() => {
@@ -320,6 +320,10 @@ function App() {
   }, [currentLead]);
   const action = async fn => {
     if (busyRef.current) return false;
+    if (!ready) {
+      setNotice('Ainda estamos conectando. Aguarde alguns instantes e tente enviar novamente. Suas respostas continuam nesta tela.');
+      return false;
+    }
     busyRef.current = true;
     setBusy(true);
     setNotice('Salvando no Firebase…');
@@ -419,7 +423,7 @@ function App() {
     type: "button",
     onClick: handleLogoClick,
     className: "block mx-auto text-xs underline p-2"
-  }, "Sair do admin")), /*#__PURE__*/React.createElement("div", {
+  }, "Sair do admin")), (busy || notice) && /*#__PURE__*/React.createElement("div", {
     role: "status",
     "aria-live": "polite",
     className: "px-4 py-2 text-center text-xs"
@@ -433,7 +437,7 @@ function App() {
       margin: 0,
       minWidth: 0
     }
-  }, ready && /*#__PURE__*/React.createElement(React.Fragment, null, currentLead && !isAdmin && currentView !== 'admin' && /*#__PURE__*/React.createElement("div", {
+  }, (ready || currentView === 'landing' || currentView === 'application') && /*#__PURE__*/React.createElement(React.Fragment, null, currentLead && !isAdmin && currentView !== 'admin' && /*#__PURE__*/React.createElement("div", {
     className: "max-w-xl mx-auto m-4 p-4 rounded-xl bg-white border text-sm space-y-2"
   }, /*#__PURE__*/React.createElement("p", null, /*#__PURE__*/React.createElement("strong", null, "Seu atendimento:"), " ", currentLead.name, " • ", currentLead.company), /*#__PURE__*/React.createElement("p", null, currentLead.email, " • ", currentLead.phone), /*#__PURE__*/React.createElement("p", null, /*#__PURE__*/React.createElement("strong", null, "Situação:"), " ", currentLead.status), currentLead.appointment && /*#__PURE__*/React.createElement("p", null, "Reunião: ", currentLead.appointment.date.split('-').reverse().join('/'), " às ", currentLead.appointment.time, " • ", currentLead.appointment.type), !currentLead.appointment && /*#__PURE__*/React.createElement("button", {
     type: "button",
